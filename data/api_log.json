@@ -1,0 +1,292 @@
+[
+  {
+    "url": "https://cdn.cookielaw.org/consent/34566b46-91c2-441e-b671-418bbdbc7a36/34566b46-91c2-441e-b671-418bbdbc7a36.json",
+    "status": 200,
+    "keys": [
+      "CookieSPAEnabled",
+      "CookieSameSiteNoneEnabled",
+      "CookieV2CSPEnabled",
+      "MultiVariantTestingEnabled",
+      "UseV2",
+      "MobileSDK",
+      "SkipGeolocation",
+      "ScriptType",
+      "Version",
+      "OptanonDataJSON",
+      "GeolocationUrl",
+      "BulkDomainCheckUrl",
+      "RuleSet",
+      "IabData",
+      "IabV2Data",
+      "Iab2V2Data",
+      "GoogleData",
+      "ScriptDynamicLoadEnabled",
+      "TenantFeatures",
+      "IsSuppressBanner"
+    ],
+    "type": "object",
+    "questionCount": 0
+  },
+  {
+    "url": "https://cdn.cookielaw.org/consent/34566b46-91c2-441e-b671-418bbdbc7a36/019962da-076d-71c3-89b5-1c1e08577d8c/en.json",
+    "status": 200,
+    "keys": [
+      "DomainData",
+      "CommonData",
+      "NtfyConfig",
+      "OTTData",
+      "MobileData"
+    ],
+    "type": "object",
+    "questionCount": 0
+  },
+  {
+    "url": "https://cdn.cookielaw.org/scripttemplates/202509.1.0/assets/otFlat.json",
+    "status": 200,
+    "keys": [
+      "name",
+      "html",
+      "css"
+    ],
+    "type": "object",
+    "questionCount": 0
+  },
+  {
+    "url": "https://cdn.cookielaw.org/scripttemplates/202509.1.0/assets/otCookieSettingsButton.json",
+    "status": 200,
+    "keys": [
+      "name",
+      "html",
+      "css"
+    ],
+    "type": "object",
+    "questionCount": 0
+  },
+  {
+    "url": "https://cdn.cookielaw.org/scripttemplates/202509.1.0/assets/v2/otPcCenter.json",
+    "status": 200,
+    "keys": [
+      "name",
+      "html",
+      "css"
+    ],
+    "type": "object",
+    "questionCount": 0
+  },
+  {
+    "url": "https://strack.collegeboard.org/ee/or2/v1/privacy/set-consent?configId=323b61ba-d5d6-4f1d-b143-d629f9e10690&requestId=0346879b-9a55-4a4d-b1af-6240f975",
+    "status": 200,
+    "keys": [
+      "requestId",
+      "handle"
+    ],
+    "type": "object",
+    "questionCount": 0
+  },
+  {
+    "url": "https://satsuiteeducatorquestionbank.collegeboard.org/manifest.json",
+    "status": 200,
+    "keys": [
+      "short_name",
+      "name",
+      "icons",
+      "start_url",
+      "display",
+      "theme_color",
+      "background_color"
+    ],
+    "type": "object",
+    "questionCount": 0
+  },
+  {
+    "url": "https://athena.collegeboard.org/api/header-links.json",
+    "status": 200,
+    "keys": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19"
+    ],
+    "type": "array[26]",
+    "questionCount": 0
+  },
+  {
+    "url": "https://athena.collegeboard.org/api/footer-links.json",
+    "status": 200,
+    "keys": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19"
+    ],
+    "type": "array[40]",
+    "questionCount": 0
+  },
+  {
+    "url": "https://satsuiteeducatorquestionbank.collegeboard.org/6gVpR/_/eJ/mltZ/ZNXFnwn1/k7Guc0c4trwXb0J3t7/SwNsVyoB/Al1XQ/CAtThwB",
+    "status": 201,
+    "keys": [
+      "success"
+    ],
+    "type": "object",
+    "questionCount": 0
+  },
+  {
+    "url": "https://satsuiteeducatorquestionbank.collegeboard.org/6gVpR/_/eJ/mltZ/ZNXFnwn1/k7Guc0c4trwXb0J3t7/SwNsVyoB/Al1XQ/CAtThwB",
+    "status": 201,
+    "keys": [
+      "success"
+    ],
+    "type": "object",
+    "questionCount": 0
+  },
+  {
+    "url": "https://strack.collegeboard.org/ee/or2/v1/interact?configId=6475a11a-b4ce-485e-ab78-fd7b8d25f797&requestId=546b3a5a-7eb3-4110-930b-2a3612231d9e",
+    "status": 200,
+    "keys": [
+      "requestId",
+      "handle"
+    ],
+    "type": "object",
+    "questionCount": 0
+  },
+  {
+    "url": "https://strack.collegeboard.org/ee/or2/v1/interact?configId=323b61ba-d5d6-4f1d-b143-d629f9e10690&requestId=947196b3-6c89-4155-a15b-ee62b145037b",
+    "status": 207,
+    "keys": [
+      "requestId",
+      "handle",
+      "errors"
+    ],
+    "type": "object",
+    "questionCount": 0
+  },
+  {
+    "url": "https://satsuiteeducatorquestionbank.collegeboard.org/6gVpR/_/eJ/mltZ/ZNXFnwn1/k7Guc0c4trwXb0J3t7/SwNsVyoB/Al1XQ/CAtThwB",
+    "status": 201,
+    "keys": [
+      "success"
+    ],
+    "type": "object",
+    "questionCount": 0
+  },
+  {
+    "url": "https://satsuiteeducatorquestionbank.collegeboard.org/6gVpR/_/eJ/mltZ/ZNXFnwn1/k7Guc0c4trwXb0J3t7/SwNsVyoB/Al1XQ/CAtThwB",
+    "status": 201,
+    "keys": [
+      "success"
+    ],
+    "type": "object",
+    "questionCount": 0
+  },
+  {
+    "url": "https://qbank-api.collegeboard.org/msreportingquestionbank-prod/questionbank/lookup",
+    "status": 200,
+    "keys": [
+      "lookupData",
+      "mathLiveItems",
+      "readingLiveItems",
+      "stateOfferings"
+    ],
+    "type": "object",
+    "questionCount": 0
+  },
+  {
+    "url": "https://dataplane.rum.us-east-1.amazonaws.com/appmonitors/585a904d-383f-48d7-abde-796584300c9c/",
+    "status": 400,
+    "keys": [
+      "message"
+    ],
+    "type": "object",
+    "questionCount": 0
+  },
+  {
+    "url": "https://satsuiteeducatorquestionbank.collegeboard.org/6gVpR/_/eJ/mltZ/ZNXFnwn1/k7Guc0c4trwXb0J3t7/SwNsVyoB/Al1XQ/CAtThwB",
+    "status": 201,
+    "keys": [
+      "success"
+    ],
+    "type": "object",
+    "questionCount": 0
+  },
+  {
+    "url": "https://strack.collegeboard.org/ee/or2/v1/interact?configId=6475a11a-b4ce-485e-ab78-fd7b8d25f797&requestId=ad640399-8b70-40b1-9ac3-f70228bda8d8",
+    "status": 200,
+    "keys": [
+      "requestId",
+      "handle"
+    ],
+    "type": "object",
+    "questionCount": 0
+  },
+  {
+    "url": "https://strack.collegeboard.org/ee/or2/v1/interact?configId=323b61ba-d5d6-4f1d-b143-d629f9e10690&requestId=cd27ea56-8256-4bb4-bc9e-66dd687cbea5",
+    "status": 207,
+    "keys": [
+      "requestId",
+      "handle",
+      "errors"
+    ],
+    "type": "object",
+    "questionCount": 0
+  },
+  {
+    "url": "https://satsuiteeducatorquestionbank.collegeboard.org/6gVpR/_/eJ/mltZ/ZNXFnwn1/k7Guc0c4trwXb0J3t7/SwNsVyoB/Al1XQ/CAtThwB",
+    "status": 201,
+    "keys": [
+      "success"
+    ],
+    "type": "object",
+    "questionCount": 0
+  },
+  {
+    "url": "https://satsuiteeducatorquestionbank.collegeboard.org/6gVpR/_/eJ/mltZ/ZNXFnwn1/k7Guc0c4trwXb0J3t7/SwNsVyoB/Al1XQ/CAtThwB",
+    "status": 201,
+    "keys": [
+      "success"
+    ],
+    "type": "object",
+    "questionCount": 0
+  },
+  {
+    "url": "https://satsuiteeducatorquestionbank.collegeboard.org/6gVpR/_/eJ/mltZ/ZNXFnwn1/k7Guc0c4trwXb0J3t7/SwNsVyoB/Al1XQ/CAtThwB",
+    "status": 201,
+    "keys": [
+      "success"
+    ],
+    "type": "object",
+    "questionCount": 0
+  }
+]

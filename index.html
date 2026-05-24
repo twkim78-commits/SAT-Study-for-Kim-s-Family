@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAT 학습 플랫폼 - Split View</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* Filter Zone - Top */
+        .filter-zone {
+            background: white;
+            border-bottom: 2px solid #ddd;
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .filter-column {
+            flex: 0 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .filter-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-select {
+            padding: 8px 12px;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            min-width: 180px;
+            color: #333;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+
+        .filter-select:hover {
+            border-color: #4CAF50;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.1);
+        }
+
+        .filter-select:disabled {
+            background: #f5f5f5;
+            color: #999;
+            cursor: not-allowed;
+            border-color: #ddd;
+        }
+
+        /* Content Container */
+        .content-container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* PDF Viewer Section (Left) - 70% */
+        .pdf-section {
+            flex: 1.4;
+            display: flex;
+            flex-direction: column;
+            background: white;
+            border-right: 2px solid #ddd;
+            overflow: hidden;
+        }
+
+        .pdf-header {
+            padding: 12px 15px;
+            background: #f9f9f9;
+            border-bottom: 1px solid #ddd;
+            font-weight: 600;
+            font-size: 13px;
+            color: #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .pdf-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .zoom-btn {
+            padding: 4px 8px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .zoom-btn:hover {
+            background: #45a049;
+        }
+
+        .zoom-level {
+            font-size: 12px;
+            color: #666;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .pdf-viewer {
+            flex: 1;
+            overflow: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f5f5f5;
+            position: relative;
+        }
+
+        .pdf-viewer iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .pdf-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: auto;
+        }
+
+        .pdf-placeholder {
+            text-align: center;
+            color: #999;
+            padding: 40px;
+        }
+
+        /* Question Section (Right) - 30% */
+        .question-section {
+            flex: 0.6;
+            display: flex;
+            flex-direction: column;
+            background: white;
+            overflow: hidden;
+        }
+
+        .question-header {
+            padding: 12px 15px;
+            background: #f9f9f9;
+            border-bottom: 1px solid #ddd;
+            font-size: 12px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .question-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 12px;
+        }
+
+        .question-info {
+            font-size: 10px;
+            color: #666;
+            margin-bottom: 8px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .question-text {
+            font-size: 12px;
+            line-height: 1.4;
+            margin-bottom: 10px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .choices {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .choice {
+            padding: 8px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+            font-size: 12px;
+        }
+
+        .choice:hover {
+            border-color: #999;
+            background: #f9f9f9;
+        }
+
+        .choice.selected {
+            background: #e8f5e9;
+            border-color: #4CAF50;
+        }
+
+        .choice.correct {
+            background: #c8e6c9;
+            border-color: #2e7d32;
+            color: #1b5e20;
+        }
+
+        .choice.incorrect {
+            background: #ffcdd2;
+            border-color: #c62828;
+            color: #b71c1c;
+        }
+
+        .choice-label {
+            font-weight: 600;
+            margin-right: 6px;
+        }
+
+        .feedback {
+            margin-top: 8px;
+            padding: 8px;
+            border-radius: 4px;
+            font-weight: 500;
+            text-align: center;
+            font-size: 11px;
+        }
+
+        .feedback.correct {
+            background: #c8e6c9;
+            color: #1b5e20;
+        }
+
+        .feedback.incorrect {
+            background: #ffcdd2;
+            color: #b71c1c;
+        }
+
+        .stats {
+            padding: 8px;
+            background: #f0f0f0;
+            border-top: 1px solid #ddd;
+            font-size: 11px;
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+
+        .stat-item {
+            flex: 1;
+        }
+
+        .stat-value {
+            font-weight: 600;
+            font-size: 12px;
+            color: #333;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 9px;
+        }
+
+        .navigation {
+            display: flex;
+            gap: 6px;
+            padding: 8px;
+            background: #f9f9f9;
+            border-top: 1px solid #ddd;
+        }
+
+        .nav-btn {
+            padding: 6px 10px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 600;
+            flex: 1;
+        }
+
+        .nav-btn:hover {
+            background: #45a049;
+        }
+
+        .nav-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .question-counter {
+            padding: 6px;
+            text-align: center;
+            font-size: 10px;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Filter Zone - Top -->
+        <div class="filter-zone">
+            <div class="filter-row">
+                <div class="filter-column">
+                    <div class="filter-title">난이도</div>
+                    <select id="difficultyFilter" class="filter-select" onchange="applyAllFilters()">
+                        <option value="">전체</option>
+                        <option value="Easy">쉬움</option>
+                        <option value="Medium">중간</option>
+                        <option value="Hard">어려움</option>
+                    </select>
+                </div>
+
+                <div class="filter-column">
+                    <div class="filter-title">시험</div>
+                    <select id="testFilter" class="filter-select" onchange="updateTestDependentFilters(); applyAllFilters()">
+                        <option value="">전체</option>
+                        <option value="Math">Math</option>
+                        <option value="Reading and Writing">Reading and Writing</option>
+                    </select>
+                </div>
+
+                <!-- Math Filters -->
+                <div class="filter-column" id="mathDomainColumn">
+                    <div class="filter-title">Math 도메인</div>
+                    <select id="mathDomainFilter" class="filter-select" onchange="updateDomainDependentSkills('math'); applyAllFilters()">
+                        <option value="">전체</option>
+                    </select>
+                </div>
+
+                <div class="filter-column" id="mathSkillColumn">
+                    <div class="filter-title">Math 스킬</div>
+                    <select id="mathSkillFilter" class="filter-select" onchange="applyAllFilters()">
+                        <option value="">전체</option>
+                    </select>
+                </div>
+
+                <!-- Reading and Writing Filters -->
+                <div class="filter-column hidden" id="rwDomainColumn">
+                    <div class="filter-title">R&W 도메인</div>
+                    <select id="rwDomainFilter" class="filter-select" onchange="updateDomainDependentSkills('rw'); applyAllFilters()">
+                        <option value="">전체</option>
+                    </select>
+                </div>
+
+                <div class="filter-column hidden" id="rwSkillColumn">
+                    <div class="filter-title">R&W 스킬</div>
+                    <select id="rwSkillFilter" class="filter-select" onchange="applyAllFilters()">
+                        <option value="">전체</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content: PDF + Question -->
+        <div class="content-container">
+            <!-- PDF Viewer (Left) 70% -->
+            <div class="pdf-section">
+                <div class="pdf-header">
+                    <span>📄 PDF 원문</span>
+                    <div class="pdf-controls">
+                        <button class="zoom-btn" onclick="zoomOut()">−</button>
+                        <div class="zoom-level" id="zoomLevel">100%</div>
+                        <button class="zoom-btn" onclick="zoomIn()">+</button>
+                    </div>
+                </div>
+                <div class="pdf-viewer">
+                    <div class="pdf-container" id="pdfContainer">
+                        <div class="pdf-placeholder">
+                            <span>PDF 로딩 중...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question & Answers (Right) 30% -->
+            <div class="question-section">
+                <div class="question-header" id="questionHeader">
+                    문제를 선택해주세요
+                </div>
+
+                <!-- Question Content -->
+                <div class="question-content">
+                    <div class="question-info" id="questionInfo"></div>
+                    <div class="question-text" id="questionText"></div>
+                    <div class="choices" id="choices"></div>
+                    <div id="feedback"></div>
+                </div>
+
+                <!-- Stats -->
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalCount">0</div>
+                        <div class="stat-label">전체</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="solvedCount">0</div>
+                        <div class="stat-label">풀이</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="accuracy">0%</div>
+                        <div class="stat-label">정답율</div>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <div class="navigation">
+                    <button class="nav-btn" id="prevBtn" onclick="previousQuestion()">← 이전</button>
+                    <button class="nav-btn" id="nextBtn" onclick="nextQuestion()">다음 →</button>
+                </div>
+
+                <!-- Question Counter -->
+                <div class="question-counter" id="questionCounter"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let allQuestions = [];
+        let filteredQuestions = [];
+        let currentIndex = 0;
+        let userAnswers = {};
+        let currentZoom = 100;
+        
+        let mathDomains = [];
+        let mathSkills = [];
+        let rwDomains = [];
+        let rwSkills = [];
+
+        async function loadData() {
+            try {
+                const response = await fetch('./data/questions-with-pdf.json');
+                allQuestions = await response.json();
+                filteredQuestions = [...allQuestions];
+                userAnswers = JSON.parse(localStorage.getItem('satAnswers') || '{}');
+                
+                initializeFilters();
+                updateTestDependentFilters();
+                updateStats();
+            } catch (error) {
+                console.error('Error loading data:', error);
+            }
+        }
+
+        function initializeFilters() {
+            // Extract Math domains and skills
+            const mathQuestions = allQuestions.filter(q => q.test === 'Math');
+            mathDomains = [...new Set(mathQuestions.map(q => q.domain))].sort();
+            mathSkills = [...new Set(mathQuestions.map(q => q.skill))].sort();
+
+            // Extract R&W domains and skills
+            const rwQuestions = allQuestions.filter(q => q.test === 'Reading and Writing');
+            rwDomains = [...new Set(rwQuestions.map(q => q.domain))].sort();
+            rwSkills = [...new Set(rwQuestions.map(q => q.skill))].sort();
+
+            populateSelect('mathDomainFilter', mathDomains);
+            populateSelect('mathSkillFilter', mathSkills);
+            populateSelect('rwDomainFilter', rwDomains);
+            populateSelect('rwSkillFilter', rwSkills);
+        }
+
+        function populateSelect(selectId, items) {
+            const select = document.getElementById(selectId);
+            const firstOption = select.innerHTML.split('</option>')[0] + '</option>';
+            select.innerHTML = firstOption + items.map(item => `
+                <option value="${item}">${item}</option>
+            `).join('');
+        }
+
+        function updateTestDependentFilters() {
+            const testValue = document.getElementById('testFilter').value;
+            
+            if (testValue === 'Math' || testValue === '') {
+                document.getElementById('mathDomainColumn').classList.remove('hidden');
+                document.getElementById('mathSkillColumn').classList.remove('hidden');
+            } else {
+                document.getElementById('mathDomainColumn').classList.add('hidden');
+                document.getElementById('mathSkillColumn').classList.add('hidden');
+                document.getElementById('mathDomainFilter').value = '';
+                document.getElementById('mathSkillFilter').value = '';
+            }
+
+            if (testValue === 'Reading and Writing' || testValue === '') {
+                document.getElementById('rwDomainColumn').classList.remove('hidden');
+                document.getElementById('rwSkillColumn').classList.remove('hidden');
+            } else {
+                document.getElementById('rwDomainColumn').classList.add('hidden');
+                document.getElementById('rwSkillColumn').classList.add('hidden');
+                document.getElementById('rwDomainFilter').value = '';
+                document.getElementById('rwSkillFilter').value = '';
+            }
+        }
+
+        function updateDomainDependentSkills(type) {
+            let selectedDomain, skillsToShow, skillFilterId;
+            
+            if (type === 'math') {
+                selectedDomain = document.getElementById('mathDomainFilter').value;
+                skillFilterId = 'mathSkillFilter';
+                
+                if (selectedDomain) {
+                    // Filter questions by Math test and selected domain, then get unique skills
+                    skillsToShow = [...new Set(
+                        allQuestions
+                            .filter(q => q.test === 'Math' && q.domain === selectedDomain)
+                            .map(q => q.skill)
+                    )].sort();
+                } else {
+                    // If "전체" (all) is selected, show all math skills
+                    skillsToShow = mathSkills;
+                }
+            } else if (type === 'rw') {
+                selectedDomain = document.getElementById('rwDomainFilter').value;
+                skillFilterId = 'rwSkillFilter';
+                
+                if (selectedDomain) {
+                    // Filter questions by R&W test and selected domain, then get unique skills
+                    skillsToShow = [...new Set(
+                        allQuestions
+                            .filter(q => q.test === 'Reading and Writing' && q.domain === selectedDomain)
+                            .map(q => q.skill)
+                    )].sort();
+                } else {
+                    // If "전체" (all) is selected, show all R&W skills
+                    skillsToShow = rwSkills;
+                }
+            }
+            
+            // Populate the skill dropdown with filtered skills
+            populateSelect(skillFilterId, skillsToShow);
+            
+            // Reset skill selection to empty/"전체"
+            document.getElementById(skillFilterId).value = '';
+        }
+
+        function applyAllFilters() {
+            const difficulty = document.getElementById('difficultyFilter').value;
+            const test = document.getElementById('testFilter').value;
+            const mathDomain = document.getElementById('mathDomainFilter').value;
+            const mathSkill = document.getElementById('mathSkillFilter').value;
+            const rwDomain = document.getElementById('rwDomainFilter').value;
+            const rwSkill = document.getElementById('rwSkillFilter').value;
+
+            filteredQuestions = allQuestions.filter(q => {
+                // Apply difficulty filter
+                if (difficulty && q.difficulty !== difficulty) return false;
+
+                // Apply test filter
+                if (test && q.test !== test) return false;
+
+                // Apply domain and skill filters based on test type
+                if (q.test === 'Math') {
+                    if (mathDomain && q.domain !== mathDomain) return false;
+                    if (mathSkill && q.skill !== mathSkill) return false;
+                } else if (q.test === 'Reading and Writing') {
+                    if (rwDomain && q.domain !== rwDomain) return false;
+                    if (rwSkill && q.skill !== rwSkill) return false;
+                }
+
+                return true;
+            });
+
+            currentIndex = 0;
+            renderQuestion();
+            updateStats();
+        }
+
+        function renderQuestion() {
+            if (filteredQuestions.length === 0) {
+                document.getElementById('questionText').textContent = '해당하는 문제가 없습니다.';
+                document.getElementById('questionInfo').textContent = '';
+                document.getElementById('choices').innerHTML = '';
+                document.getElementById('feedback').innerHTML = '';
+                document.getElementById('pdfContainer').innerHTML = '<div class="pdf-placeholder"><span>문제 없음</span></div>';
+                document.getElementById('questionHeader').textContent = '해당하는 문제 없음';
+                return;
+            }
+
+            const question = filteredQuestions[currentIndex];
+            
+            document.getElementById('questionInfo').innerHTML = `
+                <strong>${question.test}</strong> | ${question.domain}
+            `;
+
+            document.getElementById('questionText').textContent = question.question;
+            document.getElementById('questionHeader').textContent = `문제 ${currentIndex + 1}/${filteredQuestions.length}`;
+            renderChoices(question);
+            updatePdfViewer(question);
+            document.getElementById('questionCounter').textContent = `${currentIndex + 1} / ${filteredQuestions.length}`;
+
+            document.getElementById('prevBtn').disabled = currentIndex === 0;
+            document.getElementById('nextBtn').disabled = currentIndex === filteredQuestions.length - 1;
+        }
+
+        function renderChoices(question) {
+            const choicesContainer = document.getElementById('choices');
+            choicesContainer.innerHTML = '';
+
+            const choiceLabels = ['A', 'B', 'C', 'D'];
+            const userAnswer = userAnswers[question.id];
+            const isAnswered = userAnswer !== undefined;
+
+            choiceLabels.forEach(label => {
+                const choice = document.createElement('div');
+                choice.className = 'choice';
+                
+                if (isAnswered) {
+                    if (label === userAnswer) {
+                        choice.classList.add(userAnswer === question.correctAnswer ? 'correct' : 'incorrect');
+                    } else if (label === question.correctAnswer) {
+                        choice.classList.add('correct');
+                    }
+                } else if (label === userAnswer) {
+                    choice.classList.add('selected');
+                }
+
+                choice.innerHTML = `<span class="choice-label">${label}.</span> ${question.choices[label]}`;
+                choice.onclick = () => selectAnswer(question, label);
+                choicesContainer.appendChild(choice);
+            });
+
+            renderFeedback(question, isAnswered, userAnswer);
+        }
+
+        function renderFeedback(question, isAnswered, userAnswer) {
+            const feedbackContainer = document.getElementById('feedback');
+            feedbackContainer.innerHTML = '';
+
+            if (isAnswered) {
+                const isCorrect = userAnswer === question.correctAnswer;
+                const feedback = document.createElement('div');
+                feedback.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+                feedback.textContent = isCorrect ? '✓ 정답!' : `✗ 오답 (정답: ${question.correctAnswer})`;
+                feedbackContainer.appendChild(feedback);
+            }
+        }
+
+        function selectAnswer(question, label) {
+            if (userAnswers[question.id] !== undefined) return;
+
+            userAnswers[question.id] = label;
+            localStorage.setItem('satAnswers', JSON.stringify(userAnswers));
+            renderChoices(question);
+            updateStats();
+        }
+
+        function updatePdfViewer(question) {
+            const pdfPath = question.pdfPath;
+            const container = document.getElementById('pdfContainer');
+            
+            if (pdfPath) {
+                const pdfUrl = `${pdfPath}#zoom=${currentZoom}&toolbar=0&navpanes=0`;
+                container.innerHTML = `<iframe src="${pdfUrl}" type="application/pdf" style="width: 100%; height: 100%; border: none;"></iframe>`;
+            } else {
+                container.innerHTML = '<div class="pdf-placeholder"><span>PDF 없음</span></div>';
+            }
+        }
+
+        function zoomIn() {
+            if (currentZoom < 300) {
+                currentZoom += 25;
+                updateZoomLevel();
+                const question = filteredQuestions[currentIndex];
+                updatePdfViewer(question);
+            }
+        }
+
+        function zoomOut() {
+            if (currentZoom > 75) {
+                currentZoom -= 25;
+                updateZoomLevel();
+                const question = filteredQuestions[currentIndex];
+                updatePdfViewer(question);
+            }
+        }
+
+        function updateZoomLevel() {
+            document.getElementById('zoomLevel').textContent = currentZoom + '%';
+        }
+
+        function updateStats() {
+            const totalFiltered = filteredQuestions.length;
+            const solvedFiltered = filteredQuestions.filter(q => userAnswers[q.id] !== undefined).length;
+            const correctFiltered = filteredQuestions.filter(q => {
+                const answer = userAnswers[q.id];
+                return answer && answer === q.correctAnswer;
+            }).length;
+            const accuracyFiltered = solvedFiltered > 0 ? Math.round((correctFiltered / solvedFiltered) * 100) : 0;
+
+            document.getElementById('totalCount').textContent = totalFiltered;
+            document.getElementById('solvedCount').textContent = solvedFiltered;
+            document.getElementById('accuracy').textContent = accuracyFiltered + '%';
+        }
+
+        function nextQuestion() {
+            if (currentIndex < filteredQuestions.length - 1) {
+                currentIndex++;
+                renderQuestion();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                renderQuestion();
+            }
+        }
+
+        loadData();
+    </script>
+</body>
+</html>
